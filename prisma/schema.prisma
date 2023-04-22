@@ -48,6 +48,14 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
 model User {
   id                       String    @id @default(cuid())
   name                     String?
@@ -72,20 +80,13 @@ enum Role {
 }
 
 model Project {
-  id               String @id @default(cuid())
+  id               String   @id @default(cuid())
   name             String
   description      String
-  projectManager   User?  @relation("ProjectManager", fields: [projectManagerId], references: [id])
-  projectManagerId String @unique
+  projectManager   User?    @relation("ProjectManager", fields: [projectManagerId], references: [id])
+  projectManagerId String   @unique
   developers       User[]
-}
-
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
-
-  @@unique([identifier, token])
+  tickets          Ticket[]
 }
 
 model Ticket {
@@ -101,6 +102,8 @@ model Ticket {
   developer   User?          @relation("TicketDeveloper", fields: [developerId], references: [id])
   developerId String?
   comments    Comment[]
+  project     Project        @relation(fields: [projectId], references: [id])
+  projectId   String
 }
 
 enum TicketType {
