@@ -109,19 +109,40 @@ export default function Demo() {
   //   </a>
   // ));
 
-  // TODO CONVERT THIS TO TAILWIND
-  // USE THE SANME COLOR THEORY THO
+  const data = [
+    { label: "Notifications" },
+    { label: "Billing" },
+    { label: "Security" },
+  ];
+
+  const [active, setActive] = useState("Notifications");
+
+  const links = data.map((item) => (
+    <button
+      className={`m-1 flex ${
+        active === item.label ? "bg-blue-500 text-white" : "hover:bg-blue-200"
+      }`}
+      key={item.label}
+      onClick={() => setActive(item.label)}
+    >
+      {item.label}
+    </button>
+  ));
+
   return (
     <AppShell
       padding="md"
       navbar={
-        <Navbar width={{ base: 240 }} p="sm">
-          <div className="flex grow flex-col">
-            <div className="mb-4 border-b border-gray-600 p-3 pb-5">
+        <Navbar width={{ base: 240 }}>
+          <div className="flex grow flex-col p-4">
+            <div className="mb-6 border-b  border-gray-600 pb-4">
               YOUR LOGO GOES HERE
             </div>
-            <div className="px-2">
+            {links}
+
+            <div className="flex px-1">
               <Button
+                className="grow"
                 variant="subtle"
                 onClick={() => {
                   console.log("HEllo world");
