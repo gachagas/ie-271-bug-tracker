@@ -5,6 +5,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { api } from "~/utils/api";
 
 const Home: NextPage = () => {
+  // eslint-disable-next-line
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
 
   return (
