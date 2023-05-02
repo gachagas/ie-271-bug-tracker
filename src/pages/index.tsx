@@ -1,5 +1,8 @@
 import { AppShell, Navbar, Header } from "@mantine/core";
 import { useState } from "react";
+import { AltBoard } from "./components/AltBoard";
+import { MainBoard } from "./components/MainBoard";
+import { type NextPage } from "next";
 
 const sampleSvg = (
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -23,26 +26,24 @@ const sampleSvg = (
   </svg>
 );
 
-export default function Demo() {
+const Home: NextPage = () => {
   const data = [
-    { label: "Dashboard Home" },
-    { label: "Manage Projects" },
-    { label: "Manage Tickets" },
-    { label: "My Projects" },
-    { label: "My Tickets" },
+    { label: "Dashboard Home", component: <AltBoard /> },
+    { label: "Manage Projects", component: <MainBoard /> },
+    { label: "Manage Tickets", component: null },
+    { label: "My Projects", component: null },
+    { label: "My Tickets", component: null },
   ];
 
-  const [active, setActive] = useState("Notifications");
+  const [active, setActive] = useState<number>(0);
 
-  const links = data.map((item) => (
+  const links = data.map((item, index) => (
     <button
       className={`flex rounded px-3 py-[10px] font-sans text-sm font-medium leading-6 ${
-        active === item.label
-          ? "bg-cyan-950 text-sky-200"
-          : "hover:bg-gray-700/50"
+        active === index ? "bg-cyan-950 text-sky-200" : "hover:bg-gray-700/50"
       }`}
       key={item.label}
-      onClick={() => setActive(item.label)}
+      onClick={() => setActive(index)}
     >
       <svg className="flex-no-shrink mr-1 h-5 w-5 translate-y-[3px] fill-current stroke-current ">
         {sampleSvg}
@@ -80,7 +81,9 @@ export default function Demo() {
         },
       })}
     >
-      <div>Hello world3</div>
+      {data[active]?.component}
     </AppShell>
   );
-}
+};
+
+export default Home;
