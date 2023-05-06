@@ -1,7 +1,6 @@
 import { AppShell, Navbar, Header } from "@mantine/core";
 import { useState } from "react";
-import { AltBoard } from "./components/AltBoard";
-import { MainBoard } from "./components/MainBoard";
+import { AdminBoard } from "./components/AdminBoard";
 import { type NextPage } from "next";
 
 const sampleSvg = (
@@ -28,8 +27,8 @@ const sampleSvg = (
 
 const Home: NextPage = () => {
   const data = [
-    { label: "Dashboard Home", component: <AltBoard /> },
-    { label: "Manage Projects", component: <MainBoard /> },
+    { label: "Admin Dashboard", component: <AdminBoard /> },
+    { label: "Dashboard", component: null },
     { label: "Manage Tickets", component: null },
     { label: "My Projects", component: null },
     { label: "My Tickets", component: null },
@@ -53,36 +52,38 @@ const Home: NextPage = () => {
   ));
 
   return (
-    <AppShell
-      padding="md"
-      navbar={
-        <Navbar width={{ base: 240 }}>
-          <div className="flex grow flex-col p-3">
-            <div className="mb-6 border-b  border-gray-600 pb-4">
-              YOUR LOGO GOES HERE
-            </div>
-            {links}
+    <div>
+      <AppShell
+        padding={0}
+        navbar={
+          <Navbar width={{ base: 240 }}>
+            <div className="flex grow flex-col p-3">
+              <div className="mb-6 border-b  border-gray-600 pb-4">
+                YOUR LOGO GOES HERE
+              </div>
+              {links}
 
-            <div className="flex px-1"></div>
-          </div>
-        </Navbar>
-      }
-      header={
-        <Header height={45} p="xs">
-          <div>Hello world2</div>
-        </Header>
-      }
-      styles={(theme) => ({
-        main: {
-          backgroundColor:
-            theme.colorScheme === "dark"
-              ? theme.colors.dark[8]
-              : theme.colors.gray[0],
-        },
-      })}
-    >
-      {data[active]?.component}
-    </AppShell>
+              <div className="flex px-1"></div>
+            </div>
+          </Navbar>
+        }
+        header={
+          <Header height={45} p={0}>
+            <div className="h-[46px]">Hello world2</div>
+          </Header>
+        }
+        styles={(theme) => ({
+          main: {
+            backgroundColor:
+              theme.colorScheme === "dark"
+                ? theme.colors.dark[8]
+                : theme.colors.gray[0],
+          },
+        })}
+      >
+        {data[active]?.component}
+      </AppShell>
+    </div>
   );
 };
 
