@@ -5,6 +5,7 @@ import { type NextPage } from "next";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 import { api } from "~/utils/api";
+import LandingPage from "./components/LandingPage";
 
 const sampleSvg = (
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -41,54 +42,67 @@ const Home: NextPage = () => {
 
   const [active, setActive] = useState<number>(0);
 
-  const links = data.map((item, index) => (
-    <button
-      className={`flex rounded px-3 py-[10px] font-sans text-sm font-medium leading-6 ${
-        active === index ? "bg-cyan-950 text-sky-200" : "hover:bg-gray-700/50"
-      }`}
-      key={item.label}
-      onClick={() => setActive(index)}
-    >
-      <svg className="flex-no-shrink mr-1 h-5 w-5 translate-y-[3px] fill-current stroke-current ">
-        {sampleSvg}
-      </svg>
-      {item.label}
-    </button>
-  ));
+  const links = data.map((item, index) => {
+    if (item.label === "Admin Dashboard" && sessionData) {
+      if (sessionData.user.role !== "ADMIN") {
+        return null;
+      }
+    }
+
+    return (
+      <button
+        className={`flex rounded px-3 py-[10px] font-sans text-sm font-medium leading-6 ${
+          active === index ? "bg-cyan-950 text-sky-200" : "hover:bg-gray-700/50"
+        }`}
+        key={item.label}
+        onClick={() => setActive(index)}
+      >
+        <svg className="flex-no-shrink mr-1 h-5 w-5 translate-y-[3px] fill-current stroke-current ">
+          {sampleSvg}
+        </svg>
+        {item.label}
+      </button>
+    );
+  });
 
   return (
     <div>
-      <AppShell
-        padding={0}
-        navbar={
-          <Navbar width={{ base: 240 }}>
-            <div className="flex grow flex-col p-3">
-              <div className="mb-6 border-b  border-gray-600 pb-4">
-                YOUR LOGO GOES HERE, mr {sessionData && sessionData.user.name}
-              </div>
-              {links}
+      {sessionData ? (
+        <AppShell
+          padding={0}
+          navbar={
+            <Navbar width={{ base: 240 }}>
+              <div className="flex grow flex-col p-3">
+                <div className="mb-6 border-b  border-gray-600 pb-4">
+                  Welcome, {sessionData && sessionData.user.name} your role is{" "}
+                  {sessionData && sessionData.user.role}
+                </div>
+                {links}
 
-              <div className="flex px-1"></div>
-            </div>
-          </Navbar>
-        }
-        header={
-          <Header height={45} p={0}>
-            <div className="h-[46px]">Hello world2</div>
-          </Header>
-        }
-        styles={(theme) => ({
-          main: {
-            backgroundColor:
-              theme.colorScheme === "dark"
-                ? theme.colors.dark[8]
-                : theme.colors.gray[0],
-          },
-        })}
-      >
-        {data[active]?.component}
-        <AuthShowcase />
-      </AppShell>
+                <div className="flex px-1"></div>
+              </div>
+            </Navbar>
+          }
+          header={
+            <Header height={45} p={0}>
+              <div className="h-[46px]">Hello world2</div>
+            </Header>
+          }
+          styles={(theme) => ({
+            main: {
+              backgroundColor:
+                theme.colorScheme === "dark"
+                  ? theme.colors.dark[8]
+                  : theme.colors.gray[0],
+            },
+          })}
+        >
+          {data[active]?.component}
+          <AuthShowcase />
+        </AppShell>
+      ) : (
+        <LandingPage />
+      )}
     </div>
   );
 };
