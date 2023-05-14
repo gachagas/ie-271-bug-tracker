@@ -23,7 +23,7 @@ const LandingPage: NextPage = () => {
                 return void signIn();
               }}
             >
-              "Sign in"
+              Sign in
             </button>
           </div>
         </div>

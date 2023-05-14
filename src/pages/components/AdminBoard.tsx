@@ -2,7 +2,7 @@ import { Tabs } from "@mantine/core";
 import { Photo, MessageCircle, Settings } from "tabler-icons-react";
 import Users from "./Admin/Users";
 export const AdminBoard = () => {
-  const links = [{ name: "AdminBoard", component: "SomeComponent" }];
+  // const links = [{ name: "AdminBoard", component: "SomeComponent" }];
 
   return (
     <>
