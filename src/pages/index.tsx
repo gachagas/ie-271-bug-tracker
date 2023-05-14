@@ -37,6 +37,8 @@ const Home: NextPage = () => {
     { label: "My Tickets", component: null },
   ];
 
+  const { data: sessionData } = useSession();
+
   const [active, setActive] = useState<number>(0);
 
   const links = data.map((item, index) => (
@@ -62,7 +64,7 @@ const Home: NextPage = () => {
           <Navbar width={{ base: 240 }}>
             <div className="flex grow flex-col p-3">
               <div className="mb-6 border-b  border-gray-600 pb-4">
-                YOUR LOGO GOES HERE
+                YOUR LOGO GOES HERE, mr {sessionData && sessionData.user.name}
               </div>
               {links}
 
@@ -113,7 +115,6 @@ const AuthShowcase: React.FC = () => {
           sessionData
             ? () => void signOut()
             : () => {
-                console.log("PRESSEd");
                 return void signIn();
               }
         }
