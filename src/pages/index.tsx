@@ -38,7 +38,7 @@ const Home: NextPage = () => {
     { label: "My Tickets", component: null },
   ];
 
-  const { data: sessionData } = useSession();
+  const { data: sessionData, status } = useSession();
 
   const [active, setActive] = useState<number>(0);
 
@@ -64,6 +64,10 @@ const Home: NextPage = () => {
       </button>
     );
   });
+
+  if (status === "loading") {
+    return <div className="m-20">Loading...</div>;
+  }
 
   return (
     <div>
