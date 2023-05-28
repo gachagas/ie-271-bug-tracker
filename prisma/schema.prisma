@@ -58,6 +58,8 @@ model VerificationToken {
 
 model PracticeModel{
   user  Int @id @default(autoincrement())
+  name String
+  someNumber Int
   comment String
 }
 
