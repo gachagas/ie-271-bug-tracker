@@ -1,32 +1,11 @@
-import { api } from "~/utils/api";
 import { DataTable } from "mantine-datatable";
 import { Eye } from "tabler-icons-react";
-import { useDisclosure } from "@mantine/hooks";
-import {
-  Checkbox,
-  Modal,
-  Button,
-  Group,
-  ActionIcon,
-  Text,
-  TextInput,
-} from "@mantine/core";
-import { useForm } from "@mantine/form";
+import { Group, ActionIcon, Text } from "@mantine/core";
+import { AddUserModal } from "./AddUserModal";
+import { api } from "~/utils/api";
 
 export const Users = () => {
   const { data, isLoading } = api.example.getAllUsers.useQuery();
-  const [opened, { open, close }] = useDisclosure(false);
-
-  const form = useForm({
-    initialValues: {
-      email: "tt@example.com",
-      termsOfService: false,
-    },
-    validate: {
-      email: (value: string) =>
-        /^\S+@\S+$/.test(value) ? null : "Invalid email",
-    },
-  });
 
   if (isLoading)
     return <div className="flex grow">Place Loading Spinner here</div>;
@@ -35,44 +14,11 @@ export const Users = () => {
     return null;
   }
 
-  const users = data.map((user) => {
-    return (
-      <div key={user.id}>
-        Hello~ {user.name} with ID {user.id}{" "}
-      </div>
-    );
-  });
-
   return (
     <>
       <div>
-        <Modal opened={opened} onClose={close} title="Add User">
-          <form
-            onSubmit={form.onSubmit((values) =>
-              console.log("Le values", values)
-            )}
-          >
-            <TextInput
-              withAsterisk
-              label="Email"
-              placeholder="your@email.com"
-              {...form.getInputProps("email")}
-            />
+        <AddUserModal />
 
-            <Checkbox
-              mt="md"
-              label="I agree to sell my privacy"
-              {...form.getInputProps("termsOfService", { type: "checkbox" })}
-            />
-
-            <Group position="right" mt="md">
-              <Button type="submit">Submit</Button>
-            </Group>
-          </form>
-        </Modal>
-
-        <div>{users}</div>
-        <Button onClick={open}>Add user</Button>
         <div className="m-8 w-[80%]">
           <DataTable
             withBorder

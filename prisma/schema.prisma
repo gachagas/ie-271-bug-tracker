@@ -68,7 +68,7 @@ model User {
   name                     String?
   email                    String?   @unique
   password                 String     
-  password2                String?
+  debugText                String?
   role                     Role      @default(SUBMITTER)
   emailVerified            DateTime?
   image                    String?
