@@ -1,5 +1,4 @@
 import { DataTable } from "mantine-datatable";
-import { useSession } from "next-auth/react";
 import { api } from "~/utils/api";
 import AddProjectModal from "./AddProjectModal";
 
@@ -8,16 +7,16 @@ export const Projects = () => {
 
   const trpc = api.useContext();
 
-  const deleteUser = api.users.deleteUser.useMutation({
-    onMutate: () => console.log("mutating..."),
-    onSuccess: () => {
-      void trpc.projects.getAll.invalidate();
-    },
-    onError: () => {
-      console.log("Error! in backend");
-    },
-    onSettled: () => console.log("Settled"),
-  });
+  // const deleteUser = api.users.deleteUser.useMutation({
+  //   onMutate: () => console.log("mutating..."),
+  //   onSuccess: () => {
+  //     void trpc.projects.getAll.invalidate();
+  //   },
+  //   onError: () => {
+  //     console.log("Error! in backend");
+  //   },
+  //   onSettled: () => console.log("Settled"),
+  // });
 
   if (isLoading)
     return <div className="flex grow">Place Loading Spinner here</div>;
