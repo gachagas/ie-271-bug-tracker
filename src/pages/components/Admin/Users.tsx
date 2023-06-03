@@ -1,7 +1,7 @@
 import { DataTable } from "mantine-datatable";
 import { Eye } from "tabler-icons-react";
 import { Group, ActionIcon, Text } from "@mantine/core";
-import { AddUserModal } from "./AddUserModal";
+import AddUserModal from "./AddUserModal";
 import { api } from "~/utils/api";
 
 export const Users = () => {
