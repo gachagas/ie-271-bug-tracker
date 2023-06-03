@@ -19,23 +19,24 @@ export const AdminBoard = () => {
       <Tabs color="lime" variant="outline" radius="xs" defaultValue="gallery">
         <Tabs.List>
           <div className="w-10"></div>
-          <Tabs.Tab value="gallery" icon={<Photo size="0.8rem" />}>
+          <Tabs.Tab value="users" icon={<Photo size="0.8rem" />}>
             Users
           </Tabs.Tab>
-          <Tabs.Tab value="messages" icon={<MessageCircle size="0.8rem" />}>
+          <Tabs.Tab value="projects" icon={<MessageCircle size="0.8rem" />}>
             Projects
           </Tabs.Tab>
-          <Tabs.Tab value="settings" icon={<Settings size="0.8rem" />}>
+          <Tabs.Tab value="tickets" icon={<Settings size="0.8rem" />}>
             Tickets
           </Tabs.Tab>
         </Tabs.List>
-        <Tabs.Panel value="gallery">
+
+        <Tabs.Panel value="users">
           <Users />
         </Tabs.Panel>
 
-        <Tabs.Panel value="messages">Projects tab content</Tabs.Panel>
+        <Tabs.Panel value="projects">Projects tab content</Tabs.Panel>
 
-        <Tabs.Panel value="settings">Tickets tab content</Tabs.Panel>
+        <Tabs.Panel value="tickets">Tickets tab content</Tabs.Panel>
       </Tabs>
     </>
   );

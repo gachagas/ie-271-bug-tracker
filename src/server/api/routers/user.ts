@@ -80,4 +80,22 @@ export const userRouter = createTRPCRouter({
       console.log("successfully created user");
       return { success: true, messagee: "Success", newUser: newUser };
     }),
+
+  deleteUser: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      console.log("receiving");
+      console.log(input);
+      const deleteUser = await ctx.prisma.user.delete({
+        where: {
+          id: input.id,
+        },
+      });
+      console.log("successfully deleted user");
+      return { success: true, message: "deleted user", user: deleteUser };
+    }),
 });
