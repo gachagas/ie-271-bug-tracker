@@ -106,12 +106,12 @@ model Ticket {
   type        TicketType
   status      TicketStatus
   priority    TicketPriority
-  submitter   User           @relation("TicketSubmitter", fields: [submitterId], references: [id])
+  submitter   User           @relation("TicketSubmitter", fields: [submitterId], references: [id], onDelete: Cascade)
   submitterId String
   developer   User?          @relation("TicketDeveloper", fields: [developerId], references: [id])
   developerId String?
   comments    Comment[]
-  project     Project        @relation(fields: [projectId], references: [id])
+  project     Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId   String
 }
 
@@ -137,9 +137,9 @@ model Comment {
   id          String   @id @default(cuid())
   message     String
   createdAt   DateTime @default(now())
-  ticket      Ticket   @relation(fields: [ticketId], references: [id])
+  ticket      Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
   ticketId    String
-  commenter   User     @relation(fields: [commenterId], references: [id])
+  commenter   User     @relation(fields: [commenterId], references: [id], onDelete: Cascade)
   commenterId String
 }
 
