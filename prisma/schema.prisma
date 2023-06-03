@@ -74,7 +74,7 @@ model User {
   image                    String?
   accounts                 Account[]
   sessions                 Session[]
-  projectsAsProjectmanager Project?  @relation("ProjectManager")
+  projectsAsProjectmanager Project[]  @relation("ProjectManager")
   projectAsDeveloper       Project[]
   ticketsAsDeveloper       Ticket[]  @relation("TicketSubmitter")
   ticketsAsSubmitter       Ticket[]  @relation("TicketDeveloper")
@@ -93,7 +93,7 @@ model Project {
   name             String   @unique
   description      String
   projectManager   User?    @relation("ProjectManager", fields: [projectManagerId], references: [id])
-  projectManagerId String?   @unique
+  projectManagerId String?  
   developers       User[]
   tickets          Ticket[]
 }
