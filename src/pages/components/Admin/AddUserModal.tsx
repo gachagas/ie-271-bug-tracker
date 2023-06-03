@@ -20,7 +20,7 @@ export type UserInput = {
   role: string;
 };
 
-export const AddUserModal = () => {
+const AddUserModal = () => {
   const [selectOpened, setSelectOpened] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [opened, { open, close }] = useDisclosure(false);
@@ -147,3 +147,5 @@ export const AddUserModal = () => {
     </>
   );
 };
+
+export default AddUserModal;
