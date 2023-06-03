@@ -16,8 +16,8 @@ export const userRouter = createTRPCRouter({
       };
     }),
 
-  getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.example.findMany();
+  getAll: publicProcedure.query(async ({ ctx }) => {
+    return await ctx.prisma.user.findMany();
   }),
 
   addUser: publicProcedure
@@ -79,6 +79,33 @@ export const userRouter = createTRPCRouter({
       });
       console.log("successfully created user");
       return { success: true, messagee: "Success", newUser: newUser };
+    }),
+
+  updateUser: publicProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        name: z.string(),
+        email: z.string(),
+        password: z.string(),
+        role: z.nativeEnum(Role),
+      })
+    )
+
+    .mutation(async ({ ctx, input }) => {
+      console.log(input);
+      const deleteUser = await ctx.prisma.user.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          name: input.name,
+          email: input.email,
+          password: input.password,
+          role: input.role,
+        },
+      });
+      return { success: true, message: "deleted user", user: deleteUser };
     }),
 
   deleteUser: publicProcedure

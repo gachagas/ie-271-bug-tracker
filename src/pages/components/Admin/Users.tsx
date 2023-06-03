@@ -5,7 +5,7 @@ import AddUserModal from "./AddUserModal";
 import { api } from "~/utils/api";
 
 export const Users = () => {
-  const { data, isLoading } = api.example.getAllUsers.useQuery();
+  const { data, isLoading } = api.users.getAll.useQuery();
   const trpc = api.useContext();
   const deleteUser = api.users.deleteUser.useMutation({
     onMutate: () => console.log("mutating..."),
@@ -46,10 +46,9 @@ export const Users = () => {
                 textAlignment: "right",
               },
               { accessor: "name", width: 200 },
-              {
-                accessor: "id",
-              },
               { accessor: "email" },
+              { accessor: "password" },
+              { accessor: "role" },
               {
                 accessor: "actions",
                 title: <div className="text-right">Row actions</div>,
