@@ -11,7 +11,7 @@ export const Users = () => {
   const deleteUser = api.users.deleteUser.useMutation({
     onMutate: () => console.log("mutating..."),
     onSuccess: () => {
-      void trpc.example.getAllUsers.invalidate();
+      void trpc.users.getAll.invalidate();
     },
     onError: () => {
       console.log("Error! in backend");

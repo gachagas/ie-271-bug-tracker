@@ -1,6 +1,7 @@
 import { Tabs } from "@mantine/core";
 import { Photo, MessageCircle, Settings } from "tabler-icons-react";
 import Users from "./Admin/Users";
+import Projects from "./Admin/Projects";
 export const AdminBoard = () => {
   // const links = [{ name: "AdminBoard", component: "SomeComponent" }];
 
@@ -34,7 +35,9 @@ export const AdminBoard = () => {
           <Users />
         </Tabs.Panel>
 
-        <Tabs.Panel value="projects">Projects tab content</Tabs.Panel>
+        <Tabs.Panel value="projects">
+          <Projects />
+        </Tabs.Panel>
 
         <Tabs.Panel value="tickets">Tickets tab content</Tabs.Panel>
       </Tabs>

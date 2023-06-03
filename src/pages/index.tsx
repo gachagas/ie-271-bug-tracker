@@ -3,7 +3,7 @@ import { useState } from "react";
 import { AdminBoard } from "./components/AdminBoard";
 import { type NextPage } from "next";
 import { signIn, signOut, useSession } from "next-auth/react";
-
+import ProjectManagerBoard from "./components/ProjectManagerBoard";
 import { api } from "~/utils/api";
 import LandingPage from "./components/LandingPage";
 
@@ -34,7 +34,7 @@ const Home: NextPage = () => {
     { label: "Admin Dashboard", component: <AdminBoard /> },
     { label: "Dashboard", component: null },
     { label: "Manage Tickets", component: null },
-    { label: "My Projects", component: null },
+    { label: "Project Management", component: <ProjectManagerBoard /> },
     { label: "My Tickets", component: null },
   ];
 
@@ -45,6 +45,15 @@ const Home: NextPage = () => {
   const links = data.map((item, index) => {
     if (item.label === "Admin Dashboard" && sessionData) {
       if (sessionData.user.role !== "ADMIN") {
+        return null;
+      }
+    }
+
+    if (item.label === "Project Management" && sessionData) {
+      if (
+        sessionData.user.role !== "ADMIN" &&
+        sessionData.user.role !== "PROJECT_MANAGER"
+      ) {
         return null;
       }
     }
