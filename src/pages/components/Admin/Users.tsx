@@ -1,7 +1,8 @@
 import { DataTable } from "mantine-datatable";
-import { EditCircle, Trash } from "tabler-icons-react";
+import { Trash } from "tabler-icons-react";
 import { Group, ActionIcon } from "@mantine/core";
 import AddUserModal from "./AddUserModal";
+import EditUserModal from "./EditUserModal";
 import { api } from "~/utils/api";
 
 export const Users = () => {
@@ -52,30 +53,33 @@ export const Users = () => {
               {
                 accessor: "actions",
                 title: <div className="text-right">Row actions</div>,
-                render: (datum) => (
-                  <Group spacing={4} position="right" noWrap>
-                    <ActionIcon
-                      color="green"
-                      onClick={() => console.log("CLick1", datum)}
-                    >
-                      <EditCircle size={16} />
-                    </ActionIcon>
-                    <ActionIcon
-                      color="blue"
-                      onClick={() => {
-                        deleteUser.mutate({ id: datum.id });
-                      }}
-                    >
-                      <Trash size={16} />
-                    </ActionIcon>
-                  </Group>
-                ),
+                render: (datum) => {
+                  const clickedData = {
+                    id: datum.id,
+                    email: datum.email ?? "",
+                    password: datum.password,
+                    name: datum.name ?? "",
+                    role: datum.role,
+                  };
+
+                  return (
+                    <Group spacing={4} position="right" noWrap>
+                      <ActionIcon color="green">
+                        <EditUserModal datum={clickedData} />
+                      </ActionIcon>
+                      <ActionIcon
+                        color="blue"
+                        onClick={() => {
+                          deleteUser.mutate({ id: datum.id });
+                        }}
+                      >
+                        <Trash size={16} />
+                      </ActionIcon>
+                    </Group>
+                  );
+                },
               },
             ]}
-            // TODO: Add toasts here
-            // onRowClick={({ name, id, email }) =>
-            //   alert(`you clicked on ${name} ${id} ${email}`)
-            // }
           />
         </div>
       </div>

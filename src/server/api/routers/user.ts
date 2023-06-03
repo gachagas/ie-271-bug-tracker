@@ -93,7 +93,6 @@ export const userRouter = createTRPCRouter({
     )
 
     .mutation(async ({ ctx, input }) => {
-      console.log(input);
       const deleteUser = await ctx.prisma.user.update({
         where: {
           id: input.id,
