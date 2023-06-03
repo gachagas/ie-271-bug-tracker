@@ -14,19 +14,19 @@ import { EditCircle } from "tabler-icons-react";
 
 import { api } from "~/utils/api";
 
-export type UserInput = {
+const EditUserModal = ({
+  id,
+  email,
+  password,
+  name,
+  role,
+}: {
   id: string;
   email: string;
   password: string;
   name: string;
   role: string;
-};
-
-interface EditUserModalProps {
-  datum: UserInput;
-}
-
-const EditUserModal = ({ datum }: EditUserModalProps) => {
+}) => {
   const [selectOpened, setSelectOpened] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [opened, { open, close }] = useDisclosure(false);
@@ -53,7 +53,7 @@ const EditUserModal = ({ datum }: EditUserModalProps) => {
   }) => {
     try {
       updateUser.mutate({
-        id: datum.id,
+        id: id,
         name: values.name,
         email: values.email,
         password: values.password,
@@ -66,10 +66,10 @@ const EditUserModal = ({ datum }: EditUserModalProps) => {
 
   const form = useForm({
     initialValues: {
-      name: datum.name,
-      email: datum.email,
-      password: datum.password,
-      role: datum.role,
+      name: name,
+      email: email,
+      password: password,
+      role: role,
     },
 
     validate: {

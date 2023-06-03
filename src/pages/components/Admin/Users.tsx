@@ -54,18 +54,16 @@ export const Users = () => {
                 accessor: "actions",
                 title: <div className="text-right">Row actions</div>,
                 render: (datum) => {
-                  const clickedData = {
-                    id: datum.id,
-                    email: datum.email ?? "",
-                    password: datum.password,
-                    name: datum.name ?? "",
-                    role: datum.role,
-                  };
-
                   return (
                     <Group spacing={4} position="right" noWrap>
                       <ActionIcon color="green">
-                        <EditUserModal datum={clickedData} />
+                        <EditUserModal
+                          id={datum.id}
+                          email={datum.email ?? ""}
+                          password={datum.password}
+                          name={datum.name ?? ""}
+                          role={datum.role}
+                        />
                       </ActionIcon>
                       <ActionIcon
                         color="blue"
