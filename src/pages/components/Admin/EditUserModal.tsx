@@ -134,6 +134,7 @@ const EditUserModal = ({
                 { value: Role.DEVELOPER, label: "Developer" },
                 { value: Role.PROJECT_MANAGER, label: "Project Manager" },
                 { value: Role.SUBMITTER, label: "Submitter" },
+                { value: Role.NONE, label: "Submitter" },
               ]}
               dropdownPosition="bottom"
               onDropdownOpen={() => setSelectOpened(true)}

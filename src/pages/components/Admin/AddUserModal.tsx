@@ -118,6 +118,7 @@ const AddUserModal = () => {
                 { value: Role.DEVELOPER, label: "Developer" },
                 { value: Role.PROJECT_MANAGER, label: "Project Manager" },
                 { value: Role.SUBMITTER, label: "Submitter" },
+                { value: Role.NONE, label: "None" },
               ]}
               dropdownPosition="bottom"
               onDropdownOpen={() => setSelectOpened(true)}
