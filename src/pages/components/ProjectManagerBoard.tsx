@@ -1,10 +1,12 @@
-import Projects from "./Admin/Projects";
+import Projects from "./ProjectManager/Projects";
 export const ProjectManagerBoard = () => {
   // const links = [{ name: "AdminBoard", component: "SomeComponent" }];
 
   return (
     <>
-      <Projects />
+      <div>Select Project</div>
+      <div>Add Project</div>
+      <div>Project Table</div>
     </>
   );
 };
