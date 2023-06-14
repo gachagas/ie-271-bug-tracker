@@ -37,27 +37,6 @@ export const userRouter = createTRPCRouter({
     return "you can now see this secret message!";
   }),
 
-  addPracticeEntry: publicProcedure
-    .input(
-      z.object({
-        name: z.string(),
-        someNumber: z.number(),
-        comment: z.string(),
-      })
-    )
-    .mutation(async ({ ctx, input }) => {
-      console.log("input val");
-
-      const newPracticeEntry = await ctx.prisma.practiceModel.create({
-        data: {
-          name: input.name,
-          someNumber: input.someNumber,
-          comment: input.comment,
-        },
-      });
-
-      return { success: true, message: "Hello world", entry: newPracticeEntry };
-    }),
 
   createUser: publicProcedure
     .input(

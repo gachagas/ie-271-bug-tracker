@@ -1,4 +1,3 @@
-import Projects from "./ProjectManager/Projects";
 export const ProjectManagerBoard = () => {
   // const links = [{ name: "AdminBoard", component: "SomeComponent" }];
 
