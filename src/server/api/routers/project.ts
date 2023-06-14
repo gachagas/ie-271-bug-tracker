@@ -1,5 +1,6 @@
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { z } from "zod";
+
 export const projectRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ ctx }) => {
     return await ctx.prisma.project.findMany({
@@ -29,5 +30,28 @@ export const projectRouter = createTRPCRouter({
         },
       });
       return { success: true, message: "success", newProject: newProject };
+    }),
+
+  getUsersProjectsAndDevelopers: publicProcedure
+    .input(
+      z.object({
+        projectManagerId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      try {
+        const getProjectsAndDevelopers = await ctx.prisma.project.findMany({
+          where: { projectManagerId: input.projectManagerId },
+          include: {
+            projectManager: true,
+            developers: true,
+            tickets: true,
+          },
+        });
+
+        return { data: getProjectsAndDevelopers };
+      } catch {
+        return { data: [] };
+      }
     }),
 });

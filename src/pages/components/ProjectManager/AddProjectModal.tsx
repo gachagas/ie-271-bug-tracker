@@ -92,7 +92,7 @@ const AddProjectModal = () => {
         </form>
       </Modal>
       <Button className="" onClick={open}>
-        Add Project
+        Add New Project
       </Button>
     </>
   );

@@ -3,7 +3,6 @@ import { api } from "~/utils/api";
 import AddProjectModal from "./AddProjectModal";
 import { Group } from "@mantine/core";
 import { ActionIcon } from "@mantine/core";
-import EditUserModal from "../Admin/EditUserModal";
 
 export const Projects = () => {
   const { data, isLoading } = api.projects.getAll.useQuery();
