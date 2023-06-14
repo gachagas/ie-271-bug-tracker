@@ -25,7 +25,7 @@ export const ProjectManagerBoard = () => {
     });
 
   const { data: projectlessDevelopers } =
-    api.users.getProjectlessDeveloper.useQuery({});
+    api.users.getProjectlessDeveloper.useQuery();
 
   const removeProjectAsDeveloper =
     api.users.removeProjectAsDeveloper.useMutation({
