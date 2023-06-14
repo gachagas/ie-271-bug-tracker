@@ -37,7 +37,6 @@ export const userRouter = createTRPCRouter({
     return "you can now see this secret message!";
   }),
 
-
   createUser: publicProcedure
     .input(
       z.object({
@@ -102,5 +101,19 @@ export const userRouter = createTRPCRouter({
       });
       console.log("successfully deleted user");
       return { success: true, message: "deleted user", user: deleteUser };
+    }),
+
+  removeProjectAsDeveloper: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const removeProjectAsDeveloper = await ctx.prisma.user.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          projectAsDeveloperId: null,
+        },
+      });
+      return { success: true, user: removeProjectAsDeveloper };
     }),
 });

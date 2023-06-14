@@ -9,14 +9,9 @@ export const Users = () => {
   const { data, isLoading } = api.users.getAll.useQuery();
   const trpc = api.useContext();
   const deleteUser = api.users.deleteUser.useMutation({
-    onMutate: () => console.log("mutating..."),
     onSuccess: () => {
       void trpc.users.getAll.invalidate();
     },
-    onError: () => {
-      console.log("Error! in backend");
-    },
-    onSettled: () => console.log("Settled"),
   });
 
   if (isLoading)
