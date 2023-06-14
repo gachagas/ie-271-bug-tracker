@@ -20,6 +20,14 @@ export const userRouter = createTRPCRouter({
     return await ctx.prisma.user.findMany();
   }),
 
+  getProjectlessDeveloper: publicProcedure.query(async ({ ctx }) => {
+    const getProjectlessDeveloper = await ctx.prisma.user.findMany({
+      where: { projectAsDeveloperId: null },
+    });
+
+    return { success: true, data: getProjectlessDeveloper };
+  }),
+
   addUser: publicProcedure
     .input(z.string())
     .mutation(async ({ ctx, input }) => {
@@ -115,5 +123,19 @@ export const userRouter = createTRPCRouter({
         },
       });
       return { success: true, user: removeProjectAsDeveloper };
+    }),
+
+  addToProjectAsDeveloper: publicProcedure
+    .input(z.object({ id: z.string(), projectId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const addToProjectAsDeveloper = await ctx.prisma.user.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          projectAsDeveloperId: input.projectId,
+        },
+      });
+      return { success: true, user: addToProjectAsDeveloper };
     }),
 });

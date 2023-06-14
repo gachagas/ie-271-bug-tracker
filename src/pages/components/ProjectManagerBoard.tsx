@@ -1,4 +1,4 @@
-import { ActionIcon, Select } from "@mantine/core";
+import { ActionIcon, Button, Select } from "@mantine/core";
 import { useState } from "react";
 import AddProjectModal from "./ProjectManager/AddProjectModal";
 import { useSession } from "next-auth/react";
@@ -11,6 +11,9 @@ export const ProjectManagerBoard = () => {
   const trpc = api.useContext();
 
   const [projectIndex, setProjectIndex] = useState<string | null>(null);
+  const [developerToAdd, setDeveloperToAdd] = useState<string | null>(null);
+  const [addDeveloperTouched, setAddDeveloperTouched] =
+    useState<boolean>(false);
 
   const { data: sessionData, status } = useSession();
 
@@ -21,12 +24,23 @@ export const ProjectManagerBoard = () => {
       projectManagerId: sessionData.user.id,
     });
 
+  const { data: projectlessDevelopers } =
+    api.users.getProjectlessDeveloper.useQuery({});
+
   const removeProjectAsDeveloper =
     api.users.removeProjectAsDeveloper.useMutation({
       onSuccess: () => {
         void trpc.projects.getUsersProjectsAndDevelopers.invalidate();
+        void trpc.users.getProjectlessDeveloper.invalidate();
       },
     });
+
+  const addProjectAsDeveloper = api.users.addToProjectAsDeveloper.useMutation({
+    onSuccess: () => {
+      void trpc.projects.getUsersProjectsAndDevelopers.invalidate();
+      void trpc.users.getProjectlessDeveloper.invalidate();
+    },
+  });
 
   if (isLoading === true) return <div>Loading Data....</div>;
 
@@ -34,6 +48,29 @@ export const ProjectManagerBoard = () => {
     projectData?.data.map((project, index) => {
       return { value: index.toString(), label: project.name };
     }) || [];
+
+  const mappedProjectLessDevelopers =
+    projectlessDevelopers?.data.map((developer) => {
+      return { value: developer.id, label: developer.name };
+    }) || [];
+
+  const disabledAddUserButton = <Button data-disabled>Add New User</Button>;
+
+  const addUserButton = (
+    <Button
+      onClick={() => {
+        if (developerToAdd) {
+          setAddDeveloperTouched(false);
+          addProjectAsDeveloper.mutate({
+            id: developerToAdd,
+            projectId: projectData?.data[Number(projectIndex)]?.id || "",
+          });
+        }
+      }}
+    >
+      Add New User
+    </Button>
+  );
 
   return (
     <>
@@ -50,8 +87,13 @@ export const ProjectManagerBoard = () => {
             <AddProjectModal />
           </div>
         </div>
+
         {!isLoading && (
-          <button onClick={() => console.log(projectData)}>Query!</button>
+          <button
+            onClick={() => console.log(projectData?.data[Number(projectIndex)])}
+          >
+            Query!
+          </button>
         )}
         <div>
           Current project is {projectIndex ? projectIndex : "nothing in there"}
@@ -98,6 +140,19 @@ export const ProjectManagerBoard = () => {
               },
             ]}
           />
+        </div>
+        <Select
+          className="flex w-96 flex-col"
+          label="Choose User to add"
+          placeholder="Pick one"
+          data={mappedProjectLessDevelopers}
+          onChange={(name) => {
+            setAddDeveloperTouched(true);
+            setDeveloperToAdd(name);
+          }}
+        />
+        <div className="my-4">
+          {addDeveloperTouched ? addUserButton : disabledAddUserButton}
         </div>
       </div>
     </>
