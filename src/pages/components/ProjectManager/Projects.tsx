@@ -1,6 +1,6 @@
 import { DataTable } from "mantine-datatable";
 import { api } from "~/utils/api";
-import AddProjectModal from "../Admin/AddProjectModal";
+import AddProjectModal from "./AddProjectModal";
 import { Group } from "@mantine/core";
 import { ActionIcon } from "@mantine/core";
 import EditUserModal from "../Admin/EditUserModal";

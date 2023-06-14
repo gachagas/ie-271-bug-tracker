@@ -17,7 +17,7 @@ export const AdminBoard = () => {
       </div>
       <div className="p-4">Rest of the content</div> */}
 
-      <Tabs color="lime" variant="outline" radius="xs" defaultValue="gallery">
+      <Tabs color="lime" variant="outline" radius="xs" defaultValue="users">
         <Tabs.List>
           <div className="w-10"></div>
           <Tabs.Tab value="users" icon={<Photo size="0.8rem" />}>

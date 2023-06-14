@@ -61,7 +61,7 @@ const AddProjectModal = () => {
 
   return (
     <>
-      <Modal opened={opened} onClose={close} title="New User">
+      <Modal opened={opened} onClose={close} title="New Project">
         <form onSubmit={form.onSubmit(handleFormSubmit)}>
           <div className="my-4">
             <TextInput
@@ -91,7 +91,7 @@ const AddProjectModal = () => {
           </Group>
         </form>
       </Modal>
-      <Button className="m-2" onClick={open}>
+      <Button className="" onClick={open}>
         Add Project
       </Button>
     </>
