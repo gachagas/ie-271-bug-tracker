@@ -1,11 +1,14 @@
 import { DataTable } from "mantine-datatable";
 import { api } from "~/utils/api";
-import AddProjectModal from "./AddProjectModal";
+import AddProjectModal from "../Admin/AddProjectModal";
+import { Group } from "@mantine/core";
+import { ActionIcon } from "@mantine/core";
+import EditUserModal from "../Admin/EditUserModal";
 
 export const Projects = () => {
   const { data, isLoading } = api.projects.getAll.useQuery();
 
-  const trpc = api.useContext();
+  // const trpc = api.useContext();
 
   // const deleteUser = api.users.deleteUser.useMutation({
   //   onMutate: () => console.log("mutating..."),
@@ -52,36 +55,25 @@ export const Projects = () => {
                 accessor: "projectManager.name",
                 title: "name of the project owner",
               },
-
-              // {
-              //   accessor: "actions",
-              //   title: <div className="text-right">Row actions</div>,
-              //   render: (datum) => {
-              //     const clickedData = {
-              //       id: datum.id,
-              //       email: datum.email ?? "",
-              //       password: datum.password,
-              //       name: datum.name ?? "",
-              //       role: datum.role,
-              //     };
-
-              //     return (
-              //       <Group spacing={4} position="right" noWrap>
-              //         <ActionIcon color="green">
-              //           <EditUserModal datum={clickedData} />
-              //         </ActionIcon>
-              //         <ActionIcon
-              //           color="blue"
-              //           onClick={() => {
-              //             deleteUser.mutate({ id: datum.id });
-              //           }}
-              //         >
-              //           <Trash size={16} />
-              //         </ActionIcon>
-              //       </Group>
-              //     );
-              //   },
-              // },
+              {
+                accessor: "actions",
+                title: <div className="text-right">Row actions</div>,
+                render: (datum) => {
+                  return (
+                    <Group spacing={4} position="right" noWrap>
+                      <ActionIcon color="green">
+                        {/* <EditUserModal
+                          id={datum.id}
+                          name={datum.name}
+                          description={datum.password}
+                          projectManagerId={datum.name ?? ""}
+                          role={datum.role}
+                        /> */}
+                      </ActionIcon>
+                    </Group>
+                  );
+                },
+              },
             ]}
           />
         </div>
