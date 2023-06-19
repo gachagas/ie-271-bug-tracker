@@ -23,9 +23,7 @@ export const SubmitterBoard = () => {
         {!isLoading && (
           <button
             onClick={() => {
-              const momentDateTime = moment(ticketData.data[0].createDate);
-
-              console.log(momentDateTime.format("YYYY-MM-DD"));
+              console.log(ticketData?.data);
             }}
           >
             Query!
