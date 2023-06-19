@@ -6,6 +6,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import ProjectManagerBoard from "./components/ProjectManagerBoard";
 import { api } from "~/utils/api";
 import LandingPage from "./components/LandingPage";
+import SubmitterBoard from "./components/SubmitterBoard";
 
 const sampleSvg = (
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,9 +34,8 @@ const Home: NextPage = () => {
   const data = [
     { label: "Admin Dashboard", component: <AdminBoard /> },
     { label: "Dashboard", component: null },
-    { label: "Manage Tickets", component: null },
     { label: "Project Management", component: <ProjectManagerBoard /> },
-    { label: "My Tickets", component: null },
+    { label: "Ticket Management", component: <SubmitterBoard /> },
   ];
 
   const { data: sessionData, status } = useSession();
@@ -53,6 +53,16 @@ const Home: NextPage = () => {
       if (
         sessionData.user.role !== "ADMIN" &&
         sessionData.user.role !== "PROJECT_MANAGER"
+      ) {
+        return null;
+      }
+    }
+
+    if (item.label === "Project Management" && sessionData) {
+      if (
+        sessionData.user.role !== "ADMIN" &&
+        sessionData.user.role !== "PROJECT_MANAGER" &&
+        sessionData.user.role !== "SUBMITTER"
       ) {
         return null;
       }
