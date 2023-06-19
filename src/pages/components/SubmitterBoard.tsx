@@ -2,7 +2,7 @@ import { DataTable } from "mantine-datatable";
 import { api } from "~/utils/api";
 import { useSession } from "next-auth/react";
 import AddTicketModal from "./ProjectManager/AddTicketModal";
-
+import moment from "moment";
 export const SubmitterBoard = () => {
   const { data: sessionData, status } = useSession();
 
@@ -20,14 +20,20 @@ export const SubmitterBoard = () => {
             <AddTicketModal />
           </div>
         </div>
-
         {!isLoading && (
-          <button onClick={() => console.log(ticketData)}>Query!</button>
+          <button
+            onClick={() => {
+              const momentDateTime = moment(ticketData.data[0].createDate);
+
+              console.log(momentDateTime.format("YYYY-MM-DD"));
+            }}
+          >
+            Query!
+          </button>
         )}
         {/* <div>
           Current project is {projectIndex ? projectIndex : "nothing in there"}
         </div> */}
-
         <div className="m-8 w-[80%]">
           <DataTable
             minHeight={150}
@@ -51,7 +57,15 @@ export const SubmitterBoard = () => {
               { accessor: "priority" },
               { accessor: "type" },
               { accessor: "status" },
-
+              {
+                accessor: "createDate",
+                render: (datum) => {
+                  const momentDate = moment(datum.createDate).format(
+                    "MMMM Do YYYY, h:mm:ss a"
+                  );
+                  return <div>{momentDate}</div>;
+                },
+              },
               // {
               //   accessor: "actions",
               //   width: 100,
