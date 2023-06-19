@@ -67,7 +67,7 @@ model Ticket {
   id          String         @id @default(cuid())
   description String
   createDate  DateTime       @default(now())
-  closeDate   DateTime
+  closeDate   DateTime?
   type        TicketType
   status      TicketStatus
   priority    TicketPriority

@@ -1,7 +1,7 @@
-import AddProjectModal from "./ProjectManager/AddProjectModal";
 import { DataTable } from "mantine-datatable";
 import { api } from "~/utils/api";
 import { useSession } from "next-auth/react";
+import AddTicketModal from "./ProjectManager/AddTicketModal";
 
 export const SubmitterBoard = () => {
   const { data: sessionData, status } = useSession();
@@ -17,7 +17,7 @@ export const SubmitterBoard = () => {
       <div className="m-8">
         <div>
           <div className="my-4">
-            <AddProjectModal />
+            <AddTicketModal />
           </div>
         </div>
 
