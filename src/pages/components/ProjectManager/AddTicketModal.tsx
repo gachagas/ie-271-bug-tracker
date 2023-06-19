@@ -12,8 +12,7 @@ const AddTicketModal = () => {
 
   const { data: sessionData } = useSession();
 
-  const { data: projectData, isLoading: isProjectLoading } =
-    api.projects.getAll.useQuery();
+  const { data: projectData } = api.projects.getAll.useQuery();
 
   const mappedProjectData =
     projectData?.map((datum) => ({
@@ -43,7 +42,12 @@ const AddTicketModal = () => {
   }) => {
     if (sessionData === null) return;
     try {
-      createTicket.mutate({ submitterId: sessionData.user.id, ...values });
+      createTicket.mutate({
+        ...values,
+        submitterId: sessionData.user.id,
+        type: values.type as TicketType,
+        priority: values.priority as TicketPriority,
+      });
     } catch (error) {
       console.log("ERROR:", error);
     }
