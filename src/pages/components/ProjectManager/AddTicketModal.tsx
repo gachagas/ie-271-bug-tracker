@@ -37,8 +37,8 @@ const AddTicketModal = () => {
 
   const handleFormSubmit = (values: {
     description: string;
-    type: TicketType;
-    priority: TicketPriority;
+    type: string;
+    priority: string;
     projectId: string;
   }) => {
     if (sessionData === null) return;
