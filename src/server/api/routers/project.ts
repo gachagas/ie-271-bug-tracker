@@ -45,7 +45,12 @@ export const projectRouter = createTRPCRouter({
           include: {
             projectManager: true,
             developers: true,
-            tickets: true,
+            tickets: {
+              include: {
+                project: { select: { name: true } },
+                developer: { select: { name: true } },
+              },
+            },
           },
         });
 
@@ -54,4 +59,8 @@ export const projectRouter = createTRPCRouter({
         return { data: [] };
       }
     }),
+
+    // get all the tickets of my project (i am a developer)
+
+
 });

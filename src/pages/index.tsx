@@ -7,6 +7,7 @@ import ProjectManagerBoard from "./components/ProjectManagerBoard";
 import { api } from "~/utils/api";
 import LandingPage from "./components/LandingPage";
 import SubmitterBoard from "./components/SubmitterBoard";
+import ProjectTicketsBoard from "./components/ProjectTicketsBoard";
 
 const sampleSvg = (
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -36,6 +37,7 @@ const Home: NextPage = () => {
     { label: "Dashboard", component: null },
     { label: "Project Management", component: <ProjectManagerBoard /> },
     { label: "Ticket Management", component: <SubmitterBoard /> },
+    { label: "Project tickets", component: <ProjectTicketsBoard /> },
   ];
 
   const { data: sessionData, status } = useSession();
@@ -58,16 +60,24 @@ const Home: NextPage = () => {
       }
     }
 
-    if (item.label === "Project Management" && sessionData) {
+    if (item.label === "Ticket Management" && sessionData) {
       if (
         sessionData.user.role !== "ADMIN" &&
-        sessionData.user.role !== "PROJECT_MANAGER" &&
         sessionData.user.role !== "SUBMITTER"
       ) {
         return null;
       }
     }
 
+    if (item.label === "Project tickets" && sessionData) {
+      if (
+        sessionData.user.role !== "ADMIN" &&
+        sessionData.user.role !== "PROJECT_MANAGER" &&
+        sessionData.user.role !== "DEVELOPER"
+      ) {
+        return null;
+      }
+    }
     return (
       <button
         className={`flex rounded px-3 py-[10px] font-sans text-sm font-medium leading-6 ${
