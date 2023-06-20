@@ -22,7 +22,7 @@ export const userRouter = createTRPCRouter({
 
   getProjectlessDeveloper: publicProcedure.query(async ({ ctx }) => {
     const getProjectlessDeveloper = await ctx.prisma.user.findMany({
-      where: { projectAsDeveloperId: null },
+      where: { projectAsDeveloperId: null, role: Role.DEVELOPER },
     });
 
     return { success: true, data: getProjectlessDeveloper };
