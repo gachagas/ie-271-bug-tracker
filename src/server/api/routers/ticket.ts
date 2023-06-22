@@ -52,4 +52,46 @@ export const ticketRouter = createTRPCRouter({
 
       return { data: newTicket };
     }),
+
+  closeTicket: publicProcedure
+    .input(
+      z.object({
+        ticketId: z.string(),
+        developerId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const closeTicket = await ctx.prisma.ticket.update({
+        where: {
+          id: input.ticketId,
+        },
+        data: {
+          status: TicketStatus.CLOSED,
+          developerId: input.developerId,
+        },
+      });
+
+      return { data: closeTicket };
+    }),
+
+  takeTicket: publicProcedure
+    .input(
+      z.object({
+        ticketId: z.string(),
+        developerId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const closeTicket = await ctx.prisma.ticket.update({
+        where: {
+          id: input.ticketId,
+        },
+        data: {
+          status: TicketStatus.IN_PROGRESS,
+          developerId: input.developerId,
+        },
+      });
+
+      return { data: closeTicket };
+    }),
 });

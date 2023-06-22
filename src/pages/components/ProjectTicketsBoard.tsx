@@ -15,6 +15,7 @@ type ticketData =
 
 export const ProjectTicketsBoard = () => {
   const { data: sessionData, status } = useSession();
+  const trpc = api.useContext();
 
   if (status !== "authenticated") return <div>Loading Session....</div>;
 
@@ -49,6 +50,18 @@ export const ProjectTicketsBoard = () => {
     //should not reach here
     isLoading = false;
   }
+
+  const takeTicket = api.tickets.takeTicket.useMutation({
+    onSuccess: () => {
+      void trpc.projects.getDeveloperProject.invalidate();
+    },
+  });
+
+  const closeTicket = api.tickets.closeTicket.useMutation({
+    onSuccess: () => {
+      void trpc.projects.getDeveloperProject.invalidate();
+    },
+  });
 
   return (
     <>
@@ -139,8 +152,10 @@ export const ProjectTicketsBoard = () => {
                                 <ActionIcon
                                   color="green"
                                   onClick={() => {
-                                    console.log("Take the ticket");
-                                    console.log(datum);
+                                    takeTicket.mutate({
+                                      ticketId: datum.id,
+                                      developerId: sessionData.user.id,
+                                    });
                                   }}
                                 >
                                   <HandGrab size={16} />
@@ -152,27 +167,34 @@ export const ProjectTicketsBoard = () => {
                             </HoverCard>
                           )}
 
-                          {datum.status !== "CLOSED" && <HoverCard
-                            width={200}
-                            shadow="md"
-                            position="left-end"
-                            openDelay={400}
-                          >
-                            <HoverCard.Target>
-                              <ActionIcon
-                                color="green"
-                                onClick={() =>
-                                  console.log("Take and close the ticket")
-                                }
-                              >
-                                <TicketIcon size={16} />
-                              </ActionIcon>
-                            </HoverCard.Target>
-                            <HoverCard.Dropdown>
-                              <div className="text-zinc-200">Close Ticket</div>
-                              <div />
-                            </HoverCard.Dropdown>
-                          </HoverCard>}
+                          {datum.status !== "CLOSED" && (
+                            <HoverCard
+                              width={200}
+                              shadow="md"
+                              position="left-end"
+                              openDelay={400}
+                            >
+                              <HoverCard.Target>
+                                <ActionIcon
+                                  color="green"
+                                  onClick={() =>
+                                    closeTicket.mutate({
+                                      ticketId: datum.id,
+                                      developerId: sessionData.user.id,
+                                    })
+                                  }
+                                >
+                                  <TicketIcon size={16} />
+                                </ActionIcon>
+                              </HoverCard.Target>
+                              <HoverCard.Dropdown>
+                                <div className="text-zinc-200">
+                                  Close Ticket
+                                </div>
+                                <div />
+                              </HoverCard.Dropdown>
+                            </HoverCard>
+                          )}
                         </>
                       )}
                     </Group>
