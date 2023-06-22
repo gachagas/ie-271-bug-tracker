@@ -43,6 +43,22 @@ export const SubmitterBoard = () => {
             highlightOnHover
             // records={projectData?.data[Number(projectIndex)]?.developers}
             records={ticketData?.data}
+            rowStyle={({ status }) => {
+              if (status === "OPEN")
+                return {
+                  color: "#f87171",
+                };
+
+              if (status === "IN_PROGRESS")
+                return {
+                  color: "#fcd34d",
+                };
+
+              if (status === "CLOSED")
+                return {
+                  color: "#86efac",
+                };
+            }}
             columns={[
               {
                 accessor: "id",
