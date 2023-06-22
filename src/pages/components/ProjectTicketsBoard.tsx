@@ -34,8 +34,16 @@ export const ProjectTicketsBoard = () => {
 
     tickets = dataArray?.flatMap((obj) => obj.tickets);
   } else if (sessionData.user.role === Role.DEVELOPER) {
-    // do developer stuff
-    isLoading = false;
+    // do dev stuff
+
+    const { data: devTicketData, isLoading: devIsLoading } =
+      api.projects.getDeveloperProject.useQuery({
+        developerId: sessionData.user.id,
+      });
+
+    isLoading = devIsLoading;
+
+    tickets = devTicketData?.data[0]?.tickets;
   } else {
     //should not reach here
     isLoading = false;

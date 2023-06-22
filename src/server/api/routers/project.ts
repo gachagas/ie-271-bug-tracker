@@ -60,7 +60,25 @@ export const projectRouter = createTRPCRouter({
       }
     }),
 
-    // get all the tickets of my project (i am a developer)
+  getDeveloperProject: publicProcedure
+    .input(
+      z.object({
+        developerId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const getDeveloperProject = await ctx.prisma.project.findMany({
+        where: { developers: { some: { id: input.developerId } } },
+        include: {
+          tickets: {
+            include: {
+              project: { select: { name: true } },
+              developer: { select: { name: true } },
+            },
+          },
+        },
+      });
 
-
+      return { data: getDeveloperProject };
+    }),
 });
