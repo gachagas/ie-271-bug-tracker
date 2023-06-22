@@ -4,7 +4,8 @@ import { useSession } from "next-auth/react";
 import moment from "moment";
 import { Role } from "@prisma/client";
 import { type Ticket } from "@prisma/client";
-
+import { ActionIcon, HoverCard, Group } from "@mantine/core";
+import { HandGrab, Ticket as TicketIcon } from "tabler-icons-react";
 type ticketData =
   | (Ticket & {
       project: { name: string };
@@ -92,12 +93,12 @@ export const ProjectTicketsBoard = () => {
                 };
             }}
             columns={[
-              {
-                accessor: "id",
-                title: "Ticket Id",
-                textAlignment: "right",
-                width: 200,
-              },
+              // {
+              //   accessor: "id",
+              //   title: "Ticket Id",
+              //   textAlignment: "right",
+              //   width: 100
+              // },
               { accessor: "description" },
               { accessor: "project.name" },
               { accessor: "priority" },
@@ -112,6 +113,70 @@ export const ProjectTicketsBoard = () => {
                     "MMMM Do YYYY, h:mm:ss a"
                   );
                   return <div>{momentDate}</div>;
+                },
+              },
+              {
+                accessor: "actions",
+                width: 100,
+                title: <div className="text-right">Row actions</div>,
+                render: (datum) => {
+                  return (
+                    <Group spacing={4} position="right" noWrap>
+                      {sessionData.user.role === "PROJECT_MANAGER" ? (
+                        <div className="text-zinc-100">
+                          No Actions for project managers
+                        </div>
+                      ) : (
+                        <>
+                          {datum.status === "OPEN" && (
+                            <HoverCard
+                              width={200}
+                              shadow="md"
+                              position="left-end"
+                              openDelay={400}
+                            >
+                              <HoverCard.Target>
+                                <ActionIcon
+                                  color="green"
+                                  onClick={() => {
+                                    console.log("Take the ticket");
+                                    console.log(datum);
+                                  }}
+                                >
+                                  <HandGrab size={16} />
+                                </ActionIcon>
+                              </HoverCard.Target>
+                              <HoverCard.Dropdown>
+                                <div className="text-zinc-200">Take Ticket</div>
+                              </HoverCard.Dropdown>
+                            </HoverCard>
+                          )}
+
+                          <HoverCard
+                            width={200}
+                            shadow="md"
+                            position="left-end"
+                            openDelay={400}
+                          >
+                            <HoverCard.Target>
+                              <ActionIcon
+                                color="green"
+                                onClick={() =>
+                                  console.log("Take and close the ticket")
+                                }
+                              >
+                                <TicketIcon size={16} />
+                              </ActionIcon>
+                            </HoverCard.Target>
+                            <HoverCard.Dropdown>
+                              <div className="text-zinc-200">Close Ticket</div>
+                              <div />
+                            </HoverCard.Dropdown>
+                          </HoverCard>
+                        </>
+                      )}
+                    </Group>
+                  );
                 },
               },
             ]}
