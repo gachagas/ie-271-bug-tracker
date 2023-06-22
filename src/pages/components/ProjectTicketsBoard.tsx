@@ -152,7 +152,7 @@ export const ProjectTicketsBoard = () => {
                             </HoverCard>
                           )}
 
-                          <HoverCard
+                          {datum.status !== "CLOSED" && <HoverCard
                             width={200}
                             shadow="md"
                             position="left-end"
@@ -172,7 +172,7 @@ export const ProjectTicketsBoard = () => {
                               <div className="text-zinc-200">Close Ticket</div>
                               <div />
                             </HoverCard.Dropdown>
-                          </HoverCard>
+                          </HoverCard>}
                         </>
                       )}
                     </Group>
