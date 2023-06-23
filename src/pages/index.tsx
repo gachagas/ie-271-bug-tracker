@@ -8,6 +8,7 @@ import { api } from "~/utils/api";
 import LandingPage from "./components/LandingPage";
 import SubmitterBoard from "./components/SubmitterBoard";
 import ProjectTicketsBoard from "./components/ProjectTicketsBoard";
+import Dashboard from "./components/AdminBoard copy";
 
 const sampleSvg = (
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -34,7 +35,7 @@ const sampleSvg = (
 const Home: NextPage = () => {
   const data = [
     { label: "Admin Dashboard", component: <AdminBoard /> },
-    { label: "Dashboard", component: null },
+    { label: "Dashboard", component: <Dashboard /> },
     { label: "Project Management", component: <ProjectManagerBoard /> },
     { label: "Ticket Management", component: <SubmitterBoard /> },
     { label: "Project tickets", component: <ProjectTicketsBoard /> },
@@ -131,7 +132,7 @@ const Home: NextPage = () => {
           })}
         >
           {data[active]?.component}
-          <AuthShowcase />
+          {/* <AuthShowcase /> */}
         </AppShell>
       ) : (
         <LandingPage />
