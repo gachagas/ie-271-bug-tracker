@@ -94,4 +94,18 @@ export const ticketRouter = createTRPCRouter({
 
       return { data: closeTicket };
     }),
+
+  getProjectTickets: publicProcedure
+    .input(
+      z.object({
+        projectId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const getProjectTickets = await ctx.prisma.ticket.findMany({
+        where: { projectId: input.projectId },
+      });
+
+      return { data: getProjectTickets };
+    }),
 });
