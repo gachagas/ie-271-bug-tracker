@@ -88,72 +88,69 @@ export const ProjectManagerBoard = () => {
           </div>
         </div>
 
-        {!isLoading && (
-          <button
-            onClick={() => console.log(projectData?.data[Number(projectIndex)])}
-          >
-            Query!
-          </button>
-        )}
         <div>
-          Current project is {projectIndex ? projectIndex : "nothing in there"}
+          Current project is{" "}
+          {projectIndex ? projectIndex : "No Project Selected"}
         </div>
-
-        <div className="m-8 w-[80%]">
-          <DataTable
-            minHeight={150}
-            noRecordsText="No developers in this project"
-            withBorder
-            borderRadius="sm"
-            withColumnBorders
-            striped
-            highlightOnHover
-            records={projectData?.data[Number(projectIndex)]?.developers}
-            columns={[
-              {
-                accessor: "id",
-                title: "Developer Id",
-                textAlignment: "right",
-                width: 200,
-              },
-              { accessor: "name" },
-              {
-                accessor: "actions",
-                width: 100,
-                title: <div className="text-right">Row actions</div>,
-                render: (datum) => {
-                  return (
-                    <Group spacing={4} position="right" noWrap>
-                      <ActionIcon
-                        color="green"
-                        onClick={() =>
-                          removeProjectAsDeveloper.mutate({
-                            id: datum.id,
-                          })
-                        }
-                      >
-                        <Trash size={16} />
-                      </ActionIcon>
-                    </Group>
-                  );
-                },
-              },
-            ]}
-          />
-        </div>
-        <Select
-          className="flex w-96 flex-col"
-          label="Choose User to add"
-          placeholder="Pick one"
-          data={mappedProjectLessDevelopers}
-          onChange={(name) => {
-            setAddDeveloperTouched(true);
-            setDeveloperToAdd(name);
-          }}
-        />
-        <div className="my-4">
-          {addDeveloperTouched ? addUserButton : disabledAddUserButton}
-        </div>
+        {projectIndex && (
+          <div>
+            <div className="m-8 w-[80%]">
+              <DataTable
+                minHeight={150}
+                noRecordsText="No developers in this project"
+                withBorder
+                borderRadius="sm"
+                withColumnBorders
+                striped
+                highlightOnHover
+                records={projectData?.data[Number(projectIndex)]?.developers}
+                columns={[
+                  {
+                    accessor: "id",
+                    title: "Developer Id",
+                    textAlignment: "right",
+                    width: 200,
+                  },
+                  { accessor: "name" },
+                  {
+                    accessor: "actions",
+                    width: 100,
+                    title: <div className="text-right">Row actions</div>,
+                    render: (datum) => {
+                      return (
+                        <Group spacing={4} position="right" noWrap>
+                          <ActionIcon
+                            color="green"
+                            onClick={() =>
+                              removeProjectAsDeveloper.mutate({
+                                id: datum.id,
+                              })
+                            }
+                          >
+                            <Trash size={16} />
+                          </ActionIcon>
+                        </Group>
+                      );
+                    },
+                  },
+                ]}
+              />
+            </div>
+            <Select
+              className="flex w-96 flex-col"
+              label="Choose User to add"
+              placeholder="Pick one"
+              data={mappedProjectLessDevelopers}
+              onChange={(name) => {
+                setAddDeveloperTouched(true);
+                setDeveloperToAdd(name);
+              }}
+            />
+            <div className="my-4">
+              {addDeveloperTouched ? addUserButton : disabledAddUserButton}
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

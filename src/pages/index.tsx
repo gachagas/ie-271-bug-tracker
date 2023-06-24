@@ -43,11 +43,20 @@ const Home: NextPage = () => {
 
   const { data: sessionData, status } = useSession();
 
-  const [active, setActive] = useState<number>(0);
+  const [active, setActive] = useState<number>(1);
 
   const links = data.map((item, index) => {
     if (item.label === "Admin Dashboard" && sessionData) {
       if (sessionData.user.role !== "ADMIN") {
+        return null;
+      }
+    }
+
+    if (item.label === "Dashboard" && sessionData) {
+      if (
+        sessionData.user.role === "ADMIN" ||
+        sessionData.user.role === "SUBMITTER"
+      ) {
         return null;
       }
     }
@@ -119,7 +128,7 @@ const Home: NextPage = () => {
           }
           header={
             <Header height={45} p={0}>
-              <div className="h-[46px]">Hello world2</div>
+              <div className="m-4 h-12">ie-271-bugtracker</div>
             </Header>
           }
           styles={(theme) => ({
@@ -146,7 +155,7 @@ export default Home;
 const AuthShowcase: React.FC = () => {
   const { data: sessionData } = useSession();
 
-  const { data: secretMessage } = api.example.getSecretMessage.useQuery(
+  const {} = api.example.getSecretMessage.useQuery(
     undefined, // no input
     { enabled: sessionData?.user !== undefined }
   );
@@ -155,7 +164,6 @@ const AuthShowcase: React.FC = () => {
     <div className="flex flex-col items-center justify-center gap-4">
       <p className="text-center text-2xl text-white">
         {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
-        {secretMessage && <span> - {secretMessage}</span>}
       </p>
       <button
         className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"

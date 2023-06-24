@@ -66,18 +66,21 @@ export const ProjectTicketsBoard = () => {
   return (
     <>
       <div className="m-8">
-        {!isLoading && (
-          <button
-            onClick={() => {
-              console.log(tickets);
-            }}
-          >
-            Query!!!
-          </button>
-        )}
-        {/* <div>
-          Current project is {projectIndex ? projectIndex : "nothing in there"}
-        </div> */}
+        <div>LEGEND</div>
+        <div className="m-2 flex h-full w-full flex-row items-center">
+          <div className="h-4 w-4 bg-red-400"></div>
+          <span className="ml-2">IN OPEN</span>
+        </div>
+
+        <div className="m-2 flex h-full w-full flex-row items-center">
+          <div className="h-4 w-4 bg-yellow-400"></div>
+          <span className="ml-2">IN PROGRESS</span>
+        </div>
+        <div className="m-2 flex h-full w-full flex-row items-center">
+          <div className="h-4 w-4 bg-green-400"></div>
+          <span className="ml-2">CLOSED</span>
+        </div>
+
         <div className="m-8 w-[80%]">
           <DataTable
             minHeight={150}
@@ -87,7 +90,6 @@ export const ProjectTicketsBoard = () => {
             withColumnBorders
             striped
             highlightOnHover
-            // records={projectData?.data[Number(projectIndex)]?.developers}
             records={tickets}
             rowStyle={({ status }) => {
               if (status === "OPEN")

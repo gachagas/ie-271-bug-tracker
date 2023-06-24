@@ -20,18 +20,6 @@ export const SubmitterBoard = () => {
             <AddTicketModal />
           </div>
         </div>
-        {!isLoading && (
-          <button
-            onClick={() => {
-              console.log(ticketData?.data);
-            }}
-          >
-            Query!
-          </button>
-        )}
-        {/* <div>
-          Current project is {projectIndex ? projectIndex : "nothing in there"}
-        </div> */}
         <div className="m-8 w-[80%]">
           <DataTable
             minHeight={150}
@@ -41,7 +29,6 @@ export const SubmitterBoard = () => {
             withColumnBorders
             striped
             highlightOnHover
-            // records={projectData?.data[Number(projectIndex)]?.developers}
             records={ticketData?.data}
             rowStyle={({ status }) => {
               if (status === "OPEN")
