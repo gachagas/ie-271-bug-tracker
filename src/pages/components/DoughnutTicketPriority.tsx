@@ -17,6 +17,8 @@ export const DoughnutTicketPriority = ({ tickets }: { tickets: Ticket[] }) => {
     [TicketPriority.LOW]: 0,
   };
 
+  if (tickets === undefined) return <div>No Tickets!</div>;
+
   tickets.forEach((ticket) => {
     const priority = ticket.priority;
     priorityCounts[priority] += 1;
