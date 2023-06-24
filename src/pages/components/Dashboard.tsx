@@ -36,6 +36,13 @@ export const Dashboard = () => {
     setSelectedProject(projectId);
   };
 
+  const { data: devProject } = api.projects.getDeveloperProject.useQuery({
+    developerId: sessionData.user.id,
+  });
+
+  const devTickets = devProject?.data[0]?.tickets ?? [];
+  const totalDevTickets = devTickets.length;
+
   return (
     <>
       <div className="m-8 h-full w-full">
@@ -73,8 +80,30 @@ export const Dashboard = () => {
         )}
 
         {/* pm data */}
-
         {/* dev data */}
+        {sessionData.user.role === "DEVELOPER" && (
+          <div className="m-8 flex h-full flex-col">
+            <div className="m-8 flex gap-8">
+              <div className="h-[300px] w-1/3 ">
+                <DoughnutTicketPriority tickets={devTickets ?? []} />
+              </div>
+              <div className="h-[300px] w-1/3 ">
+                <DoughnutTicketType tickets={devTickets ?? []} />
+              </div>
+              <div className="h-[300px] w-1/3 ">
+                <DoughnutTicketStatus tickets={devTickets ?? []} />
+              </div>
+            </div>
+            <div className="m-8 flex gap-8">
+              <div className="text-3xl font-semibold text-blue-200">
+                Total Number of Tickets: {totalDevTickets}
+              </div>
+              <div className="text-3xl font-semibold text-blue-200">
+                Project Name: {devProject?.data[0]?.name}
+              </div>
+            </div>
+          </div>
+        )}
         {/* dev data */}
       </div>
     </>
