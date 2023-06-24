@@ -47,7 +47,7 @@ export const Dashboard = () => {
             onChange={handleSelectProject}
           />
         )}
-        <button onClick={() => console.log(something)}>Query!</button>
+        <button onClick={() => console.log("Hello world")}>Query!</button>
         <button onClick={() => console.log(pmTickets)}>Pmtickets!</button>
         {/* pm data */}
         <div className="m-8 flex h-full flex-col">
