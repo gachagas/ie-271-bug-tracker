@@ -1,6 +1,6 @@
 import { Select } from "@mantine/core";
 import { useSession } from "next-auth/react";
-import { type Project, Role, Ticket } from "@prisma/client";
+import { type Project, Role } from "@prisma/client";
 import { api } from "~/utils/api";
 import { type ReactNode, useState } from "react";
 import DoughnutTicketPriority from "./DoughnutTicketPriority";

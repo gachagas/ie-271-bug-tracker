@@ -57,7 +57,7 @@ export const Projects = () => {
               {
                 accessor: "actions",
                 title: <div className="text-right">Row actions</div>,
-                render: (datum) => {
+                render: () => {
                   return (
                     <Group spacing={4} position="right" noWrap>
                       <ActionIcon color="green">
