@@ -4,8 +4,12 @@ import { Group, ActionIcon } from "@mantine/core";
 import AddUserModal from "./AddUserModal";
 import EditUserModal from "./EditUserModal";
 import { api } from "~/utils/api";
+import ReactGA from "react-ga";
 
 export const Users = () => {
+  const trackingId = "G-J697KLK62K";
+  ReactGA.initialize(trackingId);
+
   const { data, isLoading } = api.users.getAll.useQuery();
   const trpc = api.useContext();
   const deleteUser = api.users.deleteUser.useMutation({
@@ -24,7 +28,19 @@ export const Users = () => {
   return (
     <>
       <div>
-        <button onClick={() => console.log(data)}>Display data</button>
+        <button
+          onClick={() => {
+            ReactGA.event({
+              category: "sampleCategory",
+              action: "sampleAction",
+              label: "sampleLabel",
+              value: 45,
+            });
+            console.log(data);
+          }}
+        >
+          Display data
+        </button>
         <AddUserModal />
 
         <div className="m-8 w-[80%]">
