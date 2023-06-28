@@ -5,10 +5,12 @@ import AddUserModal from "./AddUserModal";
 import EditUserModal from "./EditUserModal";
 import { api } from "~/utils/api";
 import ReactGA from "react-ga";
+import ReactGA4 from "react-ga4";
 
 export const Users = () => {
   const trackingId = "G-J697KLK62K";
   ReactGA.initialize(trackingId);
+  ReactGA4.initialize(trackingId);
 
   const { data, isLoading } = api.users.getAll.useQuery();
   const trpc = api.useContext();
@@ -36,7 +38,14 @@ export const Users = () => {
               label: "sampleLabel",
               value: 45,
             });
-            console.log(data);
+
+            ReactGA4.event({
+              category: "ga4Wevent",
+              action: "ga4action",
+              label: "ga4lebel",
+              value: 65,
+            });
+            console.log("sending event");
           }}
         >
           Display data
