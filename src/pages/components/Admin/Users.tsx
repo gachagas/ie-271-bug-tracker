@@ -45,6 +45,21 @@ export const Users = () => {
               label: "ga4lebel",
               value: 65,
             });
+
+            ReactGA4.event({
+              category: "ga4Wevent222",
+              action: "ga4action",
+              label: "ga4lebel22",
+              value: 65,
+            });
+
+            ReactGA4.event({
+              category: "ga4Wevent222",
+              action: "ga4action",
+              label: "ga4lebel22333",
+              value: 65,
+            });
+
             console.log("sending event");
           }}
         >
