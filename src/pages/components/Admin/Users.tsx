@@ -6,12 +6,9 @@ import EditUserModal from "./EditUserModal";
 import { api } from "~/utils/api";
 import ReactGA from "react-ga";
 import ReactGA4 from "react-ga4";
+import moment from "moment";
 
 export const Users = () => {
-  const trackingId = "G-J697KLK62K";
-  ReactGA.initialize(trackingId);
-  ReactGA4.initialize(trackingId);
-
   const { data, isLoading } = api.users.getAll.useQuery();
   const trpc = api.useContext();
   const deleteUser = api.users.deleteUser.useMutation({
@@ -32,38 +29,24 @@ export const Users = () => {
       <div>
         <button
           onClick={() => {
-            ReactGA.event({
-              category: "sampleCategory",
-              action: "sampleAction",
-              label: "sampleLabel",
-              value: 45,
-            });
+            const timeStamp = moment().format("MMMM DD, h:mm a");
 
-            ReactGA4.event({
-              category: "ga4Wevent",
-              action: "ga4action",
-              label: "ga4lebel",
-              value: 65,
-            });
+            const event = {
+              bot_reply: timeStamp + "bot",
+              user_message: timeStamp + "user",
+              user_email: timeStamp + "email",
+              custom: timeStamp + "customm",
+              long_message:
+                "here is a very long message what in the world is going on the quick brown fox jumped over the lazy dog",
+            };
 
-            ReactGA4.event({
-              category: "ga4Wevent222",
-              action: "ga4action",
-              label: "ga4lebel22",
-              value: 65,
-            });
+            ReactGA4.event("thumbs_down_custom", event);
 
-            ReactGA4.event({
-              category: "ga4Wevent222",
-              action: "ga4action",
-              label: "ga4lebel22333",
-              value: 65,
-            });
-
-            console.log("sending event");
+            console.log("sending");
+            console.dir(event);
           }}
         >
-          Display data
+          Custom Events
         </button>
         <AddUserModal />
 
