@@ -4,7 +4,6 @@ import { Group, ActionIcon } from "@mantine/core";
 import AddUserModal from "./AddUserModal";
 import EditUserModal from "./EditUserModal";
 import { api } from "~/utils/api";
-import ReactGA from "react-ga";
 import ReactGA4 from "react-ga4";
 import moment from "moment";
 
@@ -23,6 +22,8 @@ export const Users = () => {
   if (!data) {
     return null;
   }
+  const trackingId = "G-J697KLK62K";
+  ReactGA4.initialize(trackingId);
 
   return (
     <>
