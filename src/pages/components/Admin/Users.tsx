@@ -22,7 +22,9 @@ export const Users = () => {
   if (!data) {
     return null;
   }
-  const trackingId = "G-J697KLK62K";
+  // const trackingId = "G-J697KLK62K"; //v1
+  const trackingId = "G-9LKHKKEMB0"; //v2
+
   ReactGA4.initialize(trackingId);
 
   return (

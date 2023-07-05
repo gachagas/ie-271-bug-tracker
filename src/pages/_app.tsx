@@ -24,12 +24,12 @@ const MyApp: AppType<{ session: Session | null }> = ({
     gtmId,
   };
 
-  const trackingId = "G-J697KLK62K";
+  // const trackingId = "G-J697KLK62K";
+  // const trackingId = "G-9LKHKKEMB0";
 
   useEffect(() => {
-    TagManager.initialize(tagManagerArgs);
-    ReactGA4.initialize(trackingId);
-
+    // TagManager.initialize(tagManagerArgs);
+    // ReactGA4.initialize(trackingId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -37,7 +37,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
     <>
       <Script
         strategy="afterInteractive"
-        src="https://www.googletagmanager.com/gtag/js?id=G-J697KLK62K"
+        src="https://www.googletagmanager.com/gtag/js?id=G-9LKHKKEMB0"
       />
       <Script
         id="google-analytics"
@@ -47,7 +47,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', 'G-J697KLK62K', {
+          gtag('config', 'G-9LKHKKEMB0', {
             page_path: window.location.pathname,
           });
         `,
