@@ -1,0 +1,13 @@
+# Docker compose file  for a single postgres instance
+
+version: "3"
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres-chatgpt
+    environment:
+      POSTGRES_USER: postgres # Name of superuser
+      POSTGRES_PASSWORD: password # Password of superuser
+      POSTGRES_DB: database # Database to be automatically created
+    ports:
+      - "5432:5432"
