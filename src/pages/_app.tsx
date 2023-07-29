@@ -17,8 +17,6 @@ const MyApp: AppType<{ session: Session | null }> = ({
     prepend: false,
   });
 
-  const gtmId = "GTM-K6FC2F5";
-
   // const trackingId = "G-J697KLK62K";
   // const trackingId = "G-9LKHKKEMB0";
 

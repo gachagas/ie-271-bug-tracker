@@ -1,11 +1,12 @@
 import { ActionIcon, Button, Select } from "@mantine/core";
 import { useState } from "react";
-import AddProjectModal from "./ProjectManager/AddProjectModal";
+import AddProjectModal from "./projectManager/AddProjectModal";
 import { useSession } from "next-auth/react";
 import { Group } from "@mantine/core";
 import { DataTable } from "mantine-datatable";
 import { api } from "~/utils/api";
 import { Trash } from "tabler-icons-react";
+import PmChat from "./chat/PmChat";
 
 export const ProjectManagerBoard = () => {
   const trpc = api.useContext();
@@ -92,6 +93,8 @@ export const ProjectManagerBoard = () => {
           Current project is{" "}
           {projectIndex ? projectIndex : "No Project Selected"}
         </div>
+        <PmChat />
+
         {projectIndex && (
           <div>
             <div className="m-8 w-[80%]">
