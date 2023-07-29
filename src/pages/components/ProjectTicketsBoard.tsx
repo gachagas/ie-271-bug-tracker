@@ -19,18 +19,15 @@ export const ProjectTicketsBoard = () => {
 
   if (status !== "authenticated") return <div>Loading Session....</div>;
 
-  let isLoading = true;
   let tickets: ticketData = undefined;
 
   if (sessionData.user.role === Role.PROJECT_MANAGER) {
     // do pm stuff
 
-    const { data: pmTicketData, isLoading: pmIsLoading } =
+    const { data: pmTicketData } =
       api.projects.getUsersProjectsAndDevelopers.useQuery({
         projectManagerId: sessionData.user.id,
       });
-
-    isLoading = pmIsLoading;
 
     const dataArray = pmTicketData?.data.map((item) => item);
 
@@ -38,17 +35,13 @@ export const ProjectTicketsBoard = () => {
   } else if (sessionData.user.role === Role.DEVELOPER) {
     // do dev stuff
 
-    const { data: devTicketData, isLoading: devIsLoading } =
-      api.projects.getDeveloperProject.useQuery({
-        developerId: sessionData.user.id,
-      });
-
-    isLoading = devIsLoading;
+    const { data: devTicketData } = api.projects.getDeveloperProject.useQuery({
+      developerId: sessionData.user.id,
+    });
 
     tickets = devTicketData?.data[0]?.tickets;
   } else {
     //should not reach here
-    isLoading = false;
   }
 
   const takeTicket = api.tickets.takeTicket.useMutation({

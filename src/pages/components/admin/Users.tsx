@@ -6,6 +6,7 @@ import EditUserModal from "./EditUserModal";
 import { api } from "~/utils/api";
 import ReactGA4 from "react-ga4";
 import moment from "moment";
+import AdminChat from "../chat/AdminChat";
 
 export const Users = () => {
   const { data, isLoading } = api.users.getAll.useQuery();
@@ -101,6 +102,7 @@ export const Users = () => {
             ]}
           />
         </div>
+        <AdminChat />
       </div>
     </>
   );

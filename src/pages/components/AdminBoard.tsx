@@ -1,7 +1,7 @@
 import { Tabs } from "@mantine/core";
 import { Photo, MessageCircle, Settings } from "tabler-icons-react";
-import Users from "./Admin/Users";
-import Projects from "./ProjectManager/Projects";
+import Users from "./admin/Users";
+import Projects from "./projectManager/Projects";
 export const AdminBoard = () => {
   // const links = [{ name: "AdminBoard", component: "SomeComponent" }];
 

@@ -1,14 +1,14 @@
 import { DataTable } from "mantine-datatable";
 import { api } from "~/utils/api";
 import { useSession } from "next-auth/react";
-import AddTicketModal from "./ProjectManager/AddTicketModal";
+import AddTicketModal from "./projectManager/AddTicketModal";
 import moment from "moment";
 export const SubmitterBoard = () => {
   const { data: sessionData, status } = useSession();
 
   if (status !== "authenticated") return <div>Loading Session....</div>;
 
-  const { data: ticketData, isLoading } = api.tickets.getUserTickets.useQuery({
+  const { data: ticketData } = api.tickets.getUserTickets.useQuery({
     userId: sessionData.user.id,
   });
 
